@@ -51,7 +51,16 @@ const navLinks = [
       <p class="font-dm-sans text-xs font-[300] text-pierre/40" data-i18n-copy="footer.copyright">
         © {new Date().getFullYear()} Nice Renovation — Tampere, Finland. All rights reserved.
       </p>
-      <p class="font-dm-sans text-xs font-[300] text-pierre/30 italic" data-i18n="footer.de_nice">De Nice à Tampere</p>
+      <div class="flex items-center gap-4">
+        <p class="font-dm-sans text-xs font-[300] text-pierre/30 italic" data-i18n="footer.de_nice">De Nice à Tampere</p>
+        <span class="text-pierre/20">·</span>
+        <a
+          href="https://wepix.fi"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-dm-sans text-xs font-[300] text-pierre/30 hover:text-pierre/60 transition-colors italic"
+        >Built by Wepix.fi</a>
+      </div>
     </div>
   </div>
 </footer>
