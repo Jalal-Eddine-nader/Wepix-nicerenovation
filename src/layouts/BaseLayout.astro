@@ -98,8 +98,8 @@ const {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const saved = (localStorage.getItem('lang') || 'en') as Lang;
-    const lang: Lang = LANGS.includes(saved) ? saved : 'en';
+    const saved = (localStorage.getItem('lang') || 'fi') as Lang;
+    const lang: Lang = LANGS.includes(saved) ? saved : 'fi';
     applyLang(lang);
 
     document.querySelectorAll<HTMLElement>('[data-lang-btn]').forEach(btn => {
