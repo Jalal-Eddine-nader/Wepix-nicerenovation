@@ -1,0 +1,154 @@
+---
+const links = [
+  { href: '#services', key: 'nav.services', label: 'Services' },
+  { href: '#work',     key: 'nav.work',     label: 'Our Work' },
+  { href: '#about',    key: 'nav.about',    label: 'About' },
+  { href: '#contact',  key: 'nav.contact',  label: 'Contact' },
+];
+---
+
+<nav
+  id="main-nav"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  aria-label="Main navigation"
+>
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-16 lg:h-20">
+    <!-- Logo -->
+    <a href="/" class="font-cormorant text-2xl font-semibold tracking-wide nav-logo transition-colors duration-300 shrink-0">
+      Nice Renovation
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex items-center gap-7">
+      {links.map((l) => (
+        <li>
+          <a href={l.href} class="nav-link font-dm-sans text-sm font-[400] tracking-wide transition-colors duration-200 hover:text-rouge-vif" data-i18n={l.key}>
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Right: language selector + CTA -->
+    <div class="hidden md:flex items-center gap-5">
+      <!-- Language selector -->
+      <div class="flex items-center gap-1" role="group" aria-label="Select language">
+        <button data-lang-btn="en" class="lang-btn nav-link font-dm-sans text-xs font-[500] tracking-widest uppercase px-1 py-0.5 transition-all duration-200">EN</button>
+        <span class="nav-link opacity-30 text-xs">|</span>
+        <button data-lang-btn="fi" class="lang-btn nav-link font-dm-sans text-xs font-[500] tracking-widest uppercase px-1 py-0.5 transition-all duration-200">FI</button>
+        <span class="nav-link opacity-30 text-xs">|</span>
+        <button data-lang-btn="fr" class="lang-btn nav-link font-dm-sans text-xs font-[500] tracking-widest uppercase px-1 py-0.5 transition-all duration-200">FR</button>
+      </div>
+
+      <a href="#contact" class="bg-rouge-vif text-blanc-casse font-dm-sans text-sm font-[500] px-5 py-2.5 rounded transition-opacity duration-200 hover:opacity-90 shrink-0" data-i18n="nav.cta">
+        Get a free quote
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden flex flex-col gap-1.5 p-2 nav-link" aria-label="Open menu" aria-expanded="false">
+      <span class="block w-6 h-0.5 bg-current transition-all duration-300"></span>
+      <span class="block w-6 h-0.5 bg-current transition-all duration-300"></span>
+      <span class="block w-4 h-0.5 bg-current transition-all duration-300"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 bg-navy-night flex flex-col items-center justify-center gap-10 translate-x-full transition-transform duration-300 ease-in-out"
+  aria-hidden="true"
+>
+  <ul class="flex flex-col items-center gap-8">
+    {links.map((l) => (
+      <li>
+        <a href={l.href} class="mobile-nav-link font-cormorant text-4xl font-[400] text-blanc-casse hover:text-pierre transition-colors" data-i18n={l.key}>
+          {l.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <a href="#contact" class="mobile-nav-link bg-rouge-vif text-blanc-casse font-dm-sans text-sm font-[500] px-8 py-3 rounded" data-i18n="nav.cta">
+    Get a free quote
+  </a>
+
+  <!-- Mobile language selector -->
+  <div class="flex items-center gap-3 mt-2" role="group" aria-label="Select language">
+    <button data-lang-btn="en" class="lang-btn font-dm-sans text-sm font-[500] tracking-widest uppercase text-pierre hover:text-blanc-casse transition-colors px-2 py-1">EN</button>
+    <span class="text-pierre/30">|</span>
+    <button data-lang-btn="fi" class="lang-btn font-dm-sans text-sm font-[500] tracking-widest uppercase text-pierre hover:text-blanc-casse transition-colors px-2 py-1">FI</button>
+    <span class="text-pierre/30">|</span>
+    <button data-lang-btn="fr" class="lang-btn font-dm-sans text-sm font-[500] tracking-widest uppercase text-pierre hover:text-blanc-casse transition-colors px-2 py-1">FR</button>
+  </div>
+</div>
+
+<script>
+  const nav       = document.getElementById('main-nav')!;
+  const hamburger = document.getElementById('hamburger')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  let menuOpen = false;
+
+  function updateNav() {
+    nav.classList.toggle('nav-scrolled', window.scrollY > 60);
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    hamburger.setAttribute('aria-expanded', String(menuOpen));
+    mobileMenu.classList.toggle('translate-x-full', !menuOpen);
+    mobileMenu.toggleAttribute('aria-hidden', !menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      mobileMenu.classList.add('translate-x-full');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768 && menuOpen) {
+      menuOpen = false;
+      mobileMenu.classList.add('translate-x-full');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
+
+<style>
+  #main-nav .nav-logo,
+  #main-nav .nav-link {
+    color: #F7F5F2;
+  }
+  #main-nav.nav-scrolled {
+    background-color: #0D1B3E;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+  }
+  #main-nav.nav-scrolled .nav-logo,
+  #main-nav.nav-scrolled .nav-link {
+    color: #F7F5F2;
+  }
+  /* Active language */
+  .lang-btn.lang-active {
+    color: #F7F5F2;
+    text-decoration: underline;
+    text-decoration-color: #B8001E;
+    text-underline-offset: 3px;
+  }
+  .lang-btn:not(.lang-active) {
+    opacity: 0.45;
+  }
+  .lang-btn:not(.lang-active):hover {
+    opacity: 1;
+  }
+</style>

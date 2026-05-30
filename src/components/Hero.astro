@@ -1,0 +1,149 @@
+---
+---
+
+<section id="hero" class="relative min-h-screen bg-navy-night flex items-center overflow-hidden">
+  <!-- Geometric pattern overlay -->
+  <div class="absolute inset-0 opacity-5 pointer-events-none" aria-hidden="true">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="diagonal" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+          <line x1="0" y1="0" x2="0" y2="60" stroke="#D4C9B0" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#diagonal)"/>
+    </svg>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full py-32 lg:py-0 flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+    <!-- Text block -->
+    <div class="flex-1 max-w-2xl">
+      <p class="font-dm-sans text-xs font-[500] tracking-[0.2em] uppercase text-pierre mb-6" data-i18n="hero.eyebrow">
+        11 years of European expertise
+      </p>
+
+      <h1 class="font-cormorant text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.05] font-[600] text-blanc-casse mb-4" data-i18n="hero.h1">
+        Your home,<br />reimagined.
+      </h1>
+
+      <div class="w-10 h-[3px] bg-rouge-vif mb-6"></div>
+
+      <p class="font-dm-sans text-base lg:text-lg font-[300] text-pierre leading-relaxed mb-10 max-w-md" data-i18n="hero.tagline">
+        French craft. Finnish standards. We bring eight years of European renovation expertise to every project in the Tampere region.
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="#contact" class="bg-rouge-vif text-blanc-casse font-dm-sans text-sm font-[500] px-7 py-3.5 rounded transition-opacity hover:opacity-90" data-i18n="hero.cta_primary">
+          Get a free quote
+        </a>
+        <a href="#work" class="border border-blanc-casse text-blanc-casse font-dm-sans text-sm font-[500] px-7 py-3.5 rounded transition-all hover:bg-blanc-casse hover:text-navy-night" data-i18n="hero.cta_secondary">
+          See our work
+        </a>
+      </div>
+    </div>
+
+    <!-- Before / After drag slider -->
+    <div class="flex-1 w-full max-w-xl relative">
+      <div
+        id="ba-slider"
+        class="relative overflow-hidden rounded-lg shadow-2xl aspect-[4/3] cursor-ew-resize select-none touch-none"
+        role="img"
+        data-i18n-aria="hero.slider_aria"
+        aria-label="Before and after renovation comparison — drag to reveal"
+      >
+        <!-- Before image -->
+        <img src="/images/project-31.jpg" alt="Before renovation" class="absolute inset-0 w-full h-full object-cover" draggable="false" loading="eager" />
+
+        <!-- After image (clipped) -->
+        <div id="ba-after" class="absolute inset-0" style="clip-path: inset(0 0 0 50%)">
+          <img src="/images/project-34.jpg" alt="After renovation" class="w-full h-full object-cover" draggable="false" loading="eager" />
+        </div>
+
+        <!-- Divider + handle -->
+        <div id="ba-divider" class="absolute top-0 bottom-0 w-0 flex items-center justify-center" style="left: 50%">
+          <div class="absolute inset-y-0 left-0 w-[3px] bg-rouge-vif -translate-x-1/2"></div>
+          <div id="ba-handle" class="relative z-10 w-11 h-11 rounded-full bg-white shadow-xl flex items-center justify-center gap-1">
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" aria-hidden="true"><path d="M7 1L1 7L7 13" stroke="#0D1B3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="none" aria-hidden="true"><path d="M3 1L9 7L3 13" stroke="#0D1B3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <!-- Labels -->
+        <span class="absolute bottom-3 left-3 z-10 bg-navy-night/70 text-blanc-casse font-dm-sans text-xs font-[500] px-2 py-1 rounded tracking-widest uppercase pointer-events-none" data-i18n="hero.before">Before</span>
+        <span class="absolute bottom-3 right-3 z-10 bg-rouge-vif/90 text-blanc-casse font-dm-sans text-xs font-[500] px-2 py-1 rounded tracking-widest uppercase pointer-events-none" data-i18n="hero.after">After</span>
+      </div>
+
+      <!-- Decorative frame -->
+      <div class="absolute -bottom-3 -right-3 w-full h-full border border-pierre/30 rounded-lg pointer-events-none"></div>
+    </div>
+
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" aria-hidden="true">
+    <div class="w-[1px] h-10 bg-pierre/50"></div>
+    <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="#D4C9B0" stroke-opacity="0.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<style>
+  @keyframes handle-pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+    50%       { transform: scale(1.18); box-shadow: 0 4px 28px rgba(184,0,30,0.45); }
+  }
+  #ba-handle.is-hinting { animation: handle-pulse 0.5s ease-in-out infinite; }
+</style>
+
+<script>
+  const slider  = document.getElementById('ba-slider')!;
+  const after   = document.getElementById('ba-after')!;
+  const divider = document.getElementById('ba-divider')!;
+  const handle  = document.getElementById('ba-handle')!;
+
+  let isDragging = false;
+  let hintInteracted = false;
+
+  function setPos(pct: number) {
+    const p = Math.max(2, Math.min(98, pct));
+    after.style.clipPath = `inset(0 0 0 ${p}%)`;
+    divider.style.left   = `${p}%`;
+  }
+
+  function toPos(clientX: number) {
+    return ((clientX - slider.getBoundingClientRect().left) / slider.offsetWidth) * 100;
+  }
+
+  slider.addEventListener('mousedown',  (e) => { isDragging = true; stopHint(); setPos(toPos(e.clientX)); });
+  window.addEventListener('mousemove',  (e) => { if (isDragging) setPos(toPos(e.clientX)); });
+  window.addEventListener('mouseup',    ()  => { isDragging = false; });
+  slider.addEventListener('touchstart', (e) => { isDragging = true; stopHint(); setPos(toPos(e.touches[0].clientX)); }, { passive: true });
+  window.addEventListener('touchmove',  (e) => { if (isDragging) { e.preventDefault(); setPos(toPos(e.touches[0].clientX)); } }, { passive: false });
+  window.addEventListener('touchend',   ()  => { isDragging = false; });
+
+  function animateTo(from: number, to: number, ms: number): Promise<void> {
+    return new Promise(resolve => {
+      const start = performance.now();
+      (function step(now: number) {
+        if (hintInteracted) { resolve(); return; }
+        const t = Math.min((now - start) / ms, 1);
+        const e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+        setPos(from + (to - from) * e);
+        t < 1 ? requestAnimationFrame(step) : resolve();
+      })(performance.now());
+    });
+  }
+
+  function stopHint() { hintInteracted = true; handle.classList.remove('is-hinting'); }
+
+  async function runHint() {
+    await new Promise(r => setTimeout(r, 900));
+    if (hintInteracted) return;
+    handle.classList.add('is-hinting');
+    await animateTo(50, 28, 480); if (hintInteracted) return;
+    await animateTo(28, 72, 640); if (hintInteracted) return;
+    await animateTo(72, 50, 420); if (hintInteracted) return;
+    handle.classList.remove('is-hinting');
+  }
+
+  runHint();
+</script>

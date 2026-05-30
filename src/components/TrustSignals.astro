@@ -1,0 +1,52 @@
+---
+const cards = [
+  {
+    key: '1',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title: 'French craft heritage',
+    body:  "Eight years of hands-on experience from one of Europe's most design-conscious countries. The standards we learned in France come with us to every Finnish project.",
+  },
+  {
+    key: '2',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+    title: 'Full transparency',
+    body:  "Detailed written quotes, no hidden costs, clear timelines communicated from day one. You know exactly what you're paying for, and why.",
+  },
+  {
+    key: '3',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
+    title: 'Before, during, after',
+    body:  "We photograph every stage of the work. You always know what's happening in your home — and you have a complete record when it's done.",
+  },
+  {
+    key: '4',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+    title: 'Satisfaction commitment',
+    body:  "We do not consider a project finished until you are completely happy with the result. That's not a slogan — it's how we've always worked.",
+  },
+];
+---
+
+<section id="why" class="py-24 lg:py-32 bg-blanc-casse">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+    <div class="mb-16">
+      <h2 class="font-cormorant text-[32px] lg:text-[48px] font-[600] text-navy-night mb-3" data-i18n="trust.title">Why Nice Renovation</h2>
+      <div class="w-10 h-[3px] bg-rouge-vif"></div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      {cards.map((c) => (
+        <article class="bg-white border-l-[3px] border-pierre pl-7 pr-6 py-7 rounded-r-lg flex flex-col gap-4">
+          <div class="text-bleu-royal" set:html={c.icon} />
+          <h3 class="font-cormorant text-xl font-[600] text-navy-night" data-i18n={`trust.${c.key}.title`}>{c.title}</h3>
+          <p class="font-dm-sans text-sm font-[300] text-navy-night/70 leading-relaxed" data-i18n={`trust.${c.key}.body`}>{c.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-14 text-center">
+      <p class="font-dm-sans text-sm font-[300] text-navy-night/60 mb-2" data-i18n="trust.cta_text">Be one of our first Finnish clients — and help shape our story here.</p>
+      <a href="#contact" class="font-dm-sans text-sm font-[500] text-rouge-vif underline underline-offset-4 hover:text-navy-night transition-colors" data-i18n="trust.cta_link">Get in touch</a>
+    </div>
+  </div>
+</section>

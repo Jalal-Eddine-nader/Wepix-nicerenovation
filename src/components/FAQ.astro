@@ -1,0 +1,67 @@
+---
+const faqs = [
+  { key: '1', q: 'How long does a typical renovation take?',     a: 'It depends on the scope. A bathroom renovation typically takes 2–3 weeks; a kitchen 3–5 weeks; a full home renovation can range from 6 weeks to several months. We give you a realistic timeline in your quote — and we stick to it.' },
+  { key: '2', q: 'Do you handle permits and paperwork?',         a: "We advise you on what permits are required for your project and can help coordinate the process. Some renovations in Finland require a building permit from the municipality — we make sure you know what's needed before work starts." },
+  { key: '3', q: 'Can you work within a set budget?',           a: "Yes. During the consultation we discuss your budget openly. We then design the scope and material choices around it — and we're honest if something isn't achievable at the budget level. No surprises after the fact." },
+  { key: '4', q: 'Do you provide a written quote?',             a: "Always. Our quotes are itemised: labour, materials, timeline, and payment terms. You know exactly what you're committing to before any work begins." },
+  { key: '5', q: 'Do we need to leave our home during renovation?', a: "For smaller projects like a single bathroom, you generally don't need to. For larger full-home renovations, it's sometimes more practical to arrange temporary accommodation. We discuss this during the planning phase and work around your situation." },
+  { key: '6', q: 'What areas in Finland do you serve?',         a: 'We are based in the Tampere region and primarily serve Tampere and the surrounding municipalities. For larger projects, we are open to travelling further — get in touch to discuss.' },
+  { key: '7', q: 'How do I get started?',                       a: "Simply fill in the contact form below or send us a message. We'll arrange a free, no-obligation consultation at your property, listen to your needs, and take it from there." },
+];
+---
+
+<section id="faq" class="py-24 lg:py-32 bg-navy-night">
+  <div class="max-w-3xl mx-auto px-6 lg:px-12">
+    <div class="mb-14 text-center">
+      <h2 class="font-cormorant text-[32px] lg:text-[48px] font-[600] text-blanc-casse mb-3" data-i18n="faq.title">Common questions</h2>
+      <div class="w-10 h-[3px] bg-rouge-vif mx-auto"></div>
+    </div>
+
+    <div class="space-y-px">
+      {faqs.map((item) => (
+        <div class="faq-item border-b border-pierre/20">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 py-5 text-left group" aria-expanded="false" aria-controls={`faq-body-${item.key}`}>
+            <span class="font-dm-sans text-[15px] font-[400] text-blanc-casse group-hover:text-pierre transition-colors" data-i18n={`faq.${item.key}.q`}>{item.q}</span>
+            <span class="faq-icon shrink-0 w-6 h-6 rounded-full border border-rouge-vif flex items-center justify-center text-rouge-vif">
+              <svg class="plus-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <svg class="minus-icon hidden" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div id={`faq-body-${item.key}`} class="faq-body overflow-hidden max-h-0 transition-[max-height] duration-300 ease-in-out">
+            <p class="font-dm-sans text-sm font-[300] text-pierre leading-relaxed pb-5 pr-10" data-i18n={`faq.${item.key}.a`}>{item.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.faq-trigger').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      const body = trigger.nextElementSibling as HTMLElement;
+      const plus  = trigger.querySelector('.plus-icon')  as HTMLElement;
+      const minus = trigger.querySelector('.minus-icon') as HTMLElement;
+
+      if (expanded) {
+        trigger.setAttribute('aria-expanded', 'false');
+        body.style.maxHeight = '0';
+        plus.classList.remove('hidden');
+        minus.classList.add('hidden');
+      } else {
+        document.querySelectorAll('.faq-trigger[aria-expanded="true"]').forEach((open) => {
+          open.setAttribute('aria-expanded', 'false');
+          const ob = open.nextElementSibling as HTMLElement;
+          if (ob) ob.style.maxHeight = '0';
+          (open.querySelector('.plus-icon')  as HTMLElement)?.classList.remove('hidden');
+          (open.querySelector('.minus-icon') as HTMLElement)?.classList.add('hidden');
+        });
+        trigger.setAttribute('aria-expanded', 'true');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        plus.classList.add('hidden');
+        minus.classList.remove('hidden');
+      }
+    });
+  });
+</script>

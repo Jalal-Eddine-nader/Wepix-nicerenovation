@@ -1,0 +1,57 @@
+---
+const navLinks = [
+  { href: '#services', key: 'nav.services', label: 'Services' },
+  { href: '#work',     key: 'nav.work',     label: 'Our Work' },
+  { href: '#about',    key: 'nav.about',    label: 'About' },
+  { href: '#faq',      key: 'faq.title',    label: 'FAQ' },
+  { href: '#contact',  key: 'nav.contact',  label: 'Contact' },
+];
+---
+
+<footer class="bg-navy-night border-t-[3px] border-rouge-vif">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-12">
+
+      <!-- Logo + tagline -->
+      <div>
+        <a href="/" class="font-cormorant text-2xl font-[600] text-blanc-casse tracking-wide block mb-3">
+          Nice Renovation
+        </a>
+        <p class="font-dm-sans text-sm font-[300] text-pierre leading-relaxed max-w-xs" data-i18n-nl="footer.tagline">
+          French craft. Finnish standards.<br />Professional renovation services in the Tampere region.
+        </p>
+      </div>
+
+      <!-- Nav links -->
+      <nav aria-label="Footer navigation">
+        <p class="font-dm-sans text-xs font-[500] tracking-[0.15em] uppercase text-pierre/50 mb-5" data-i18n="footer.pages_label">Pages</p>
+        <ul class="space-y-3">
+          {navLinks.map((l) => (
+            <li>
+              <a href={l.href} class="font-dm-sans text-sm font-[300] text-pierre hover:text-blanc-casse transition-colors" data-i18n={l.key}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Contact -->
+      <div>
+        <p class="font-dm-sans text-xs font-[500] tracking-[0.15em] uppercase text-pierre/50 mb-5" data-i18n="footer.contact_label">Contact</p>
+        <div class="space-y-3">
+          <a href="tel:+358408143298" class="block font-dm-sans text-sm font-[300] text-pierre hover:text-blanc-casse transition-colors">+358 40 814 3298</a>
+          <p class="font-dm-sans text-sm font-[300] text-pierre">Hallituskatu 7, Tampere</p>
+          <p class="font-dm-sans text-sm font-[300] text-pierre" data-i18n="contact.info_area">Tampere region, Finland</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-12 pt-6 border-t border-blanc-casse/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="font-dm-sans text-xs font-[300] text-pierre/40" data-i18n-copy="footer.copyright">
+        © {new Date().getFullYear()} Nice Renovation — Tampere, Finland. All rights reserved.
+      </p>
+      <p class="font-dm-sans text-xs font-[300] text-pierre/30 italic" data-i18n="footer.de_nice">De Nice à Tampere</p>
+    </div>
+  </div>
+</footer>

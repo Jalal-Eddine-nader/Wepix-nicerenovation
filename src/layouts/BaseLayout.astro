@@ -1,0 +1,112 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Nice Renovation — French craft. Finnish standards.',
+  description = 'Professional renovation services in the Tampere region, Finland. Full home renovations, kitchens, bathrooms, flooring and more. 11 years of European expertise.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="bg-blanc-casse font-dm-sans text-navy-night antialiased">
+    <slot />
+  </body>
+</html>
+
+<script>
+  import { translations, type Lang, type TKey } from '../i18n/translations';
+
+  const LANGS: Lang[] = ['en', 'fi', 'fr'];
+
+  function t(lang: Lang, key: TKey): string {
+    return (translations[lang] as Record<string, string>)[key] ?? (translations.en as Record<string, string>)[key] ?? key;
+  }
+
+  function applyLang(lang: Lang) {
+    // Text / HTML content
+    document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n as TKey;
+      const val = t(lang, key);
+      if (val) el.innerHTML = val;
+    });
+
+    // Placeholder attributes
+    document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-i18n-ph]').forEach(el => {
+      const key = el.dataset.i18nPh as TKey;
+      const val = t(lang, key);
+      if (val) el.placeholder = val;
+    });
+
+    // aria-label attributes
+    document.querySelectorAll<HTMLElement>('[data-i18n-aria]').forEach(el => {
+      const key = el.dataset.i18nAria as TKey;
+      const val = t(lang, key);
+      if (val) el.setAttribute('aria-label', val);
+    });
+
+    // Footer tagline newlines
+    document.querySelectorAll<HTMLElement>('[data-i18n-nl]').forEach(el => {
+      const key = el.dataset.i18nNl as TKey;
+      const val = t(lang, key);
+      if (val) el.innerHTML = val.replace(/\n/g, '<br />');
+    });
+
+    // Copyright: replace {year}
+    document.querySelectorAll<HTMLElement>('[data-i18n-copy]').forEach(el => {
+      const key = el.dataset.i18nCopy as TKey;
+      const val = t(lang, key).replace('{year}', String(new Date().getFullYear()));
+      if (val) el.textContent = val;
+    });
+
+    // Language toggle button active state
+    document.querySelectorAll<HTMLElement>('[data-lang-btn]').forEach(btn => {
+      const isActive = btn.dataset.langBtn === lang;
+      btn.classList.toggle('lang-active', isActive);
+    });
+
+    // html lang attribute
+    document.documentElement.lang = lang;
+
+    // Close any open FAQ items to avoid broken max-height
+    document.querySelectorAll<HTMLElement>('.faq-trigger[aria-expanded="true"]').forEach(trigger => {
+      trigger.setAttribute('aria-expanded', 'false');
+      const body = trigger.nextElementSibling as HTMLElement | null;
+      if (body) body.style.maxHeight = '0';
+      trigger.querySelector<HTMLElement>('.plus-icon')?.classList.remove('hidden');
+      trigger.querySelector<HTMLElement>('.minus-icon')?.classList.add('hidden');
+    });
+
+    localStorage.setItem('lang', lang);
+    document.dispatchEvent(new CustomEvent('i18n:applied', { detail: { lang } }));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const saved = (localStorage.getItem('lang') || 'en') as Lang;
+    const lang: Lang = LANGS.includes(saved) ? saved : 'en';
+    applyLang(lang);
+
+    document.querySelectorAll<HTMLElement>('[data-lang-btn]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const l = btn.dataset.langBtn as Lang;
+        if (LANGS.includes(l)) applyLang(l);
+      });
+    });
+  });
+</script>
